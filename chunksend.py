@@ -5,7 +5,7 @@ import subprocess
 import string
 import re
 import Rtools
-
+ 
 class SendChunkCommand(sublime_plugin.TextCommand):
   def run(self, view): # runs on command
     mysel=self.view.find_all('(?<=>>=\n)((.*\n)+?)(?=@)')
@@ -48,7 +48,7 @@ class SendChunkCommand(sublime_plugin.TextCommand):
 class NextChunkCommand(sublime_plugin.TextCommand):
     def run(self,edit):
         init_sel = int(self.view.sel()[0].a)
-        mysel=self.view.find_all('(?<=>>=\n)((.*\n)+?)(?=@)')
+        mysel=self.view.find_all('(?<=>>=\n)((.*\n)*?)(?=@)')
         cur_chunk = []
         chunk_number = []
         print range(0,len(mysel),1)
@@ -72,7 +72,7 @@ class NextChunkCommand(sublime_plugin.TextCommand):
 class PrevChunkCommand(sublime_plugin.TextCommand):
     def run(self,edit):
         init_sel = int(self.view.sel()[0].a)
-        mysel=self.view.find_all('(?<=>>=\n)((.*\n)+?)(?=@)')
+        mysel=self.view.find_all('(?<=>>=\n)((.*\n)*?)(?=@)')
         cur_chunk = []
         chunk_number = []
         print range(len(mysel)-1,-1,-1)
