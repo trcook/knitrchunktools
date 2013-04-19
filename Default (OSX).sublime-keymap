@@ -1,0 +1,13 @@
+[
+{ "keys": ["super+1"], "command": "send_chunk" },
+{ "keys": ["super+shift+."], "command": "next_chunk","context":
+    [
+      { "operand": "text.tex.latex.knitr", "operator": "equal", "match_all": true, "key": "selector" }
+    ]
+ },
+ { "keys": ["super+shift+,"], "command": "prev_chunk","context":
+    [
+      { "operand": "text.tex.latex.knitr", "operator": "equal", "match_all": true, "key": "selector" }
+    ]
+ }
+]
