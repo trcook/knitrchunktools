@@ -26,9 +26,14 @@ class SendChunkCommand(sublime_plugin.TextCommand):
     # self.view.substr(cur_chunk[0])
     # print self.view.sel()[0].begin() 
 
-    # the self.view.sel() method returns, essentially a nested list (called an object of class RegionSet -- which is  a collection of regions). So the part that is [0] indexes the first region in the region set (which is, of course, the only region in the region set), and the '.begin()' call gets the starting point for the region.
+    # the self.view.sel() method returns, essentially a nested list (called an
+    # object of class RegionSet -- which is  a collection of regions). So the
+    # part that is [0] indexes the first region in the region set (which is, of
+    # course, the only region in the region set), and the '.begin()' call gets
+    # the starting point for the region.
     
-    # print self.view.sel()[0].a # this line does the same, but uses the (for our purposes here) synonymous term 'a'
+    # print self.view.sel()[0].a # this line does the same, but uses the (for
+    # our purposes here) synonymous term 'a'
 
     
 
@@ -37,7 +42,9 @@ class SendChunkCommand(sublime_plugin.TextCommand):
     
     self.view.sel().add(cur_chunk[0])
     # print self.view.scope_name(self.view.sel()[0].b)
-    self.view.run_command('send_selection') # this runs the send_selection command from r-tools. I have yet to figure out how to work this so that it runs w/o manually setting the syntax to r (i.e. there is some scope issues at play)
+    self.view.run_command('send_selection') 
+    # this runs the send_selection command from r-tools. 
+    
     print init_sel.__class__, init_sel
     self.view.sel().subtract(cur_chunk[0])
     self.view.sel().add(sublime.Region(init_sel))
@@ -91,8 +98,19 @@ class PrevChunkCommand(sublime_plugin.TextCommand):
             print "there are ", len(mysel),"chunks, you are at chunk:" , 1
             print "start of file reached with no more chunks"
 
-        return
-# setup a menu to choose which chunk to send. 
-# maybe use a for loop for this: 
-# for each match, in the number of matches, set selection to the match if  the cursor is between the minimum of that match and the maximum of that match. You should be able to set this condition by mysel[b].a<=cursor<=max(x[2]) where x is the region of the match and cursor is whatever code is needed to get the cursor position 
- 
+            return
+        
+class NameChunkCommand(sublime_plugin.TextCommand):
+    def run(self,edit):
+        names=[]
+        full_lines = self.view.find_all('<<(.+?),.*?>>=')
+
+        for i in full_lines:
+           print self.view.substr(i)
+           names.append(re.sub(r'<<(.+?),.*?>>=',r'\1',self.view.substr(i)))
+
+        for i in names:
+            print i
+        #from here: put names into menu for selection
+
+
